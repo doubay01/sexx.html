@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>KGZ TEAM</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin:0; padding:0; }
+        body, html { height:100%; overflow:hidden; background:#000; color:#fff; font-family:'Bebas Neue', sans-serif; }
+        
+        /* INTRO */
+        #bg-image { position:fixed; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:1; filter: brightness(0.6) contrast(1.2); }
+        .overlay { position:fixed; top:0; left:0; width:100%; height:100%; z-index:2; background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.8) 100%); pointer-events:none; }
+        .cercle { position:fixed; top:0; left:0; width:100%; height:100%; z-index:3; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; }
+        
+        .avatar { width:180px; height:180px; border-radius:50%; overflow:hidden; margin-bottom:2rem; border:3px solid rgba(255,255,255,0.15); box-shadow:0 0 40px #000;
+            opacity:0; animation: up 1.6s cubic-bezier(0.25,0.46,0.45,0.94) 0.3s forwards; }
+        .avatar img { width:100%; height:100%; object-fit:cover; }
+        
+        .name { font-size: clamp(7rem,20vw,15rem); letter-spacing:0.45em; color:#fff; text-shadow: 0 0 80px rgba(150,0,0,0.6); margin-bottom:3.5rem;
+            opacity:0; animation: up 1.6s cubic-bezier(0.25,0.46,0.45,0.94) 0.5s forwards; }
+        
+        .bar { width:40%; max-width:500px; height:80px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.15); border-radius:10px; overflow:hidden;
+            opacity:0; animation: in 1s ease-out 1s forwards; }
+        .fill { position:absolute; top:0; left:0; height:100%; width:0%; background: url('https://media1.tenor.com/m/X3swFIwTa78AAAAd/good-morning.gif') repeat-x;
+            background-size: auto 100%; animation: load 4s ease-in-out forwards; box-shadow:0 0 40px rgba(255,50,50,0.8); }
+        .pct { margin-top:2rem; font-size:1.6rem; color:#800; letter-spacing:0.5em; opacity:0; animation: in 1s ease-out 1.4s forwards; }
+
+        @keyframes up { to { opacity:1; transform:translateY(0); } }
+        @keyframes in { to { opacity:1; } }
+        @keyframes load { to { width:100%; } }
+
+        /* SCARY PAGE */
+        #main-page { position:fixed; top:0; left:0; width:100%; height:100%; z-index:10; background:#000; display:none; flex-direction:column;
+            justify-content:center; align-items:center; opacity:0; transition: opacity 1.5s; }
+        #main-bg { position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; filter: brightness(0.35) contrast(1.6); }
+        .main-overlay { position:absolute; top:0; left:0; width:100%; height:100%; background: radial-gradient(circle, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.95) 100%); }
+
+        .scary-gif { width:800px; max-width:96%; border-radius:25px; box-shadow:0 0 120px #ff0000; opacity:0;
+            animation: glitch 3s infinite, shake 0.4s infinite 1.5s; }
+        .scary-text { font-family: 'Creepster', cursive; font-size: clamp(7rem,20vw,16rem); color:#ff0000; margin:1.5rem 0;
+            text-shadow:0 0 50px #ff0000; animation: pulse 2s infinite, drip 6s infinite; }
+        .sub-text { font-size: clamp(3.5rem,12vw,8rem); color:#ff3333; letter-spacing:0.3em; text-shadow:0 0 50px #800; }
+        .leave-text { margin-top:3rem; font-size:2.3rem; color:#666; }
+        .final-message { font-family: 'Creepster', cursive; font-size: clamp(5rem,15vw,12rem); color:#8b0000; letter-spacing:0.4em;
+            margin-top:6rem; opacity:0; text-shadow:0 0 60px #ff0000, 0 50px 60px #000;
+            animation: bloodDrip 7s infinite, appear 2s 4.5s forwards; }
+
+        @keyframes glitch { 0%,100%{transform:translate(0)} 20%{transform:translate(-6%,6%)} 40%{transform:translate(6%,-6%)} 60%{transform:translate(-4%,4%)} }
+        @keyframes shake { 0%,100%{transform:translate(0,0)} 25%{transform:translate(-15px,15px)} 75%{transform:translate(15px,-15px)} }
+        @keyframes pulse { 0%,100%{opacity:0.85} 50%{opacity:1; text-shadow:0 0 90px #ff0000} }
+        @keyframes drip { 0%{text-shadow:0 0 40px #ff0000, 0 20px 40px #600} 50%{text-shadow:0 0 50px #ff0000, 0 80px 80px #600} 100%{text-shadow:0 0 40px #ff0000, 0 20px 40px #600} }
+        @keyframes bloodDrip { 0%{text-shadow:0 0 50px #ff0000, 0 30px 40px #300} 50%{text-shadow:0 0 80px #ff0000, 0 100px 100px #300} 100%{text-shadow:0 0 50px #ff0000, 0 30px 40px #300} }
+        @keyframes appear { to { opacity:1; } }
+    </style>
+</head>
+<body>
+
+    <!-- INTRO -->
+    <img id="bg-image" src="https://media1.tenor.com/m/X3swFIwTa78AAAAd/good-morning.gif" alt="bg">
+    <div class="overlay"></div>
+    <div class="cercle">
+        <div class="avatar"><img src="https://media1.tenor.com/m/X3swFIwTa78AAAAd/good-morning.gif" alt="avatar"></div>
+        <h1 class="name">gng el fale7a </h1>
+        <div class="bar"><div class="fill"></div></div>
+        <div class="pct">0%</div>
+    </div>
+
+    <!-- SCARY PAGE -->
+    <div id="main-page">
+        <img id="main-bg" src="https://media1.tenor.com/m/X3swFIwTa78AAAAd/good-morning.gif" alt="scary bg">
+        <div class="main-overlay"></div>
+        <img class="scary-gif" src="https://media1.tenor.com/m/X3swFIwTa78AAAAd/good-morning.gif" alt="NO ESCAPE">
+        <div class="scary-text">YOU'RE FUCKED</div>
+        <div class="sub-text">BY KGZ TEAM</div>
+        <div class="leave-text">CLOSE THE TAB IF YOU'RE SCARED...</div>
+        <div class="ip-display" style="font-size: 2rem; color: #ff3333; margin: 1rem 0; text-shadow: 0 0 30px #ff0000;">Your IP: 192.168.0.22</div>
+        <div class="final-message">LEAVE? YOU'RE FUCKED<br>BY KGZ</div>
+    </div>
+
+    <!-- MUSIC STARTS INSTANTLY (even during loading) -->
+    <iframe src="https://www.youtube.com/watch?v=S-bj08Ny7tY&list=RDS-bj08Ny7tY&start_radio=1" 
+            allow="autoplay" style="display:none;"></iframe>
+
+    <script>
+        const pct = document.querySelector('.pct');
+        let progress = 0;
+        const duration = 4000; // 4 seconds loading
+        const step = duration / 100;
+
+        // Start music immediately (already in iframe, no JS needed)
+
+        const timer = setInterval(() => {
+            progress++;
+            pct.textContent = progress + '%';
+
+            if (progress >= 100) {
+                clearInterval(timer);
+                document.body.style.transition = 'opacity 1.2s';
+                document.body.style.opacity = '0';
+
+                setTimeout(() => {
+                    document.querySelector('.cercle').style.display = 'none';
+                    document.getElementById('bg-image').style.display = 'none';
+                    document.querySelector('.overlay').style.display = 'none';
+
+                    const mainPage = document.getElementById('main-page');
+                    mainPage.style.display = 'flex';
+                    setTimeout(() => { 
+                        mainPage.style.opacity = '1'; 
+                        document.querySelector('.scary-gif').style.opacity = '1';
+                    }, 100);
+                }, 1300);
+            }
+        }, step);
+
+        // FAST AUTO-RELOAD (like real prank pages) — restarts every 13–16 seconds
+        setTimeout(() => {
+            location.reload();
+        }, Math.floor(Math.random() * 3000) + 13000); // 13–16 seconds
+    </script>
+</body>
+</html>
